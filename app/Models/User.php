@@ -18,9 +18,10 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'name',      // maps to your single name column
         'email',
         'password',
+        'role',
     ];
 
     /**
