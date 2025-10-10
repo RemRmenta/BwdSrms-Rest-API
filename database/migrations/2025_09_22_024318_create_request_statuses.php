@@ -6,21 +6,15 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('request_statuses', function (Blueprint $table) {
             $table->id();
-            $table->string('type'); // e.g., submitted, in_progress, completed, cancelled
-            $table->timestamps();
+            $table->string('type'); // e.g., "Pending", "Approved", "Rejected"
+            $table->timestamps();    // created_at & updated_at
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('request_statuses');

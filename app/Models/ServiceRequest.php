@@ -2,10 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class ServiceRequest extends Model
 {
+    use HasFactory;
+
+    protected $table = 'service_requests';
+
     protected $fillable = [
         'resident_id',
         'request_type_id',

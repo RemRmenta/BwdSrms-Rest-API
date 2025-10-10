@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('request_assignments', function (Blueprint $table) {
@@ -16,12 +13,13 @@ return new class extends Migration
             $table->unsignedBigInteger('service_request_id');
             $table->unsignedBigInteger('service_worker_id');
             $table->timestamps();
+
+            // Optional: foreign keys if you have service_requests and users table
+            // $table->foreign('service_request_id')->references('id')->on('service_requests')->onDelete('cascade');
+            // $table->foreign('service_worker_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('request_assignments');

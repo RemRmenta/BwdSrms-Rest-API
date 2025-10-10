@@ -6,21 +6,15 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-       Schema::create('work_statuses', function (Blueprint $table) {
-        $table->id();
-        $table->string('status'); // pending, in_progress, completed
-        $table->timestamps();
-    });
+        Schema::create('work_statuses', function (Blueprint $table) {
+            $table->id();
+            $table->string('status'); // e.g., "Pending", "In Progress", "Completed"
+            $table->timestamps();     // created_at & updated_at
+        });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('work_statuses');

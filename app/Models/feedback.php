@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class feedback extends Model
+class Feedback extends Model
 {
-     protected $fillable = [
+    protected $table = 'feedback'; // matches your table name
+
+    protected $fillable = [
         'resident_id',
         'service_request_id',
         'rating',

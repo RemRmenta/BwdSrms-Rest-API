@@ -2,92 +2,73 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\ServiceRequest;
+use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
 class ServiceRequestController extends Controller
 {
-    /**
-     * Display a listing of all service requests.
-     */
-    public function index(): JsonResponse
+    // 🧾 Get all service requests
+    public function index()
     {
-        // You can also use ->with() to include relationships later (e.g., user or request type)
-        $requests = ServiceRequest::all();
-
-        return response()->json([
-            'message' => 'Service requests retrieved successfully.',
-            'data' => $requests
-        ]);
+        return response()->json(ServiceRequest::all());
     }
 
-    /**
-     * Store a newly created service request in storage.
-     */
-    public function store(Request $request): JsonResponse
+    // 🔍 Get one service request by ID
+    public function show($id)
+    {
+        $serviceRequest = ServiceRequest::find($id);
+
+        if (!$serviceRequest) {
+            return response()->json(['message' => 'Service request not found'], 404);
+        }
+
+        return response()->json($serviceRequest);
+    }
+
+    // ➕ Create a new service request
+    public function store(Request $request)
     {
         $validated = $request->validate([
-            'resident_id' => 'required|exists:users,id',
-            'request_type_id' => 'required|exists:request_types,id',
-            'request_status_id' => 'required|exists:request_statuses,id',
+            'resident_id' => 'required|integer',
+            'request_type_id' => 'required|integer',
+            'request_status_id' => 'required|integer',
             'description' => 'nullable|string',
-            'status' => 'nullable|string|in:pending,in_progress,completed',
-            'service_worker_id' => 'nullable|exists:users,id',
+            'status' => 'required|string',
+            'service_worker_id' => 'nullable|integer',
             'service_proof' => 'nullable|string',
         ]);
 
         $serviceRequest = ServiceRequest::create($validated);
 
-        return response()->json([
-            'message' => 'Service request created successfully.',
-            'data' => $serviceRequest
-        ], 201);
+        return response()->json($serviceRequest, 201);
     }
 
-    /**
-     * Display the specified service request.
-     */
-    public function show(ServiceRequest $serviceRequest): JsonResponse
+    // ✏️ Update an existing service request
+    public function update(Request $request, $id)
     {
-        return response()->json([
-            'message' => 'Service request retrieved successfully.',
-            'data' => $serviceRequest
-        ]);
+        $serviceRequest = ServiceRequest::find($id);
+
+        if (!$serviceRequest) {
+            return response()->json(['message' => 'Service request not found'], 404);
+        }
+
+        $serviceRequest->update($request->all());
+
+        return response()->json($serviceRequest);
     }
 
-    /**
-     * Update the specified service request in storage.
-     */
-    public function update(Request $request, ServiceRequest $serviceRequest): JsonResponse
+    // 🗑️ Delete a service request
+    public function destroy($id)
     {
-        $validated = $request->validate([
-            'resident_id' => 'sometimes|exists:users,id',
-            'request_type_id' => 'sometimes|exists:request_types,id',
-            'request_status_id' => 'sometimes|exists:request_statuses,id',
-            'description' => 'nullable|string',
-            'status' => 'sometimes|string|in:pending,in_progress,completed',
-            'service_worker_id' => 'nullable|exists:users,id',
-            'service_proof' => 'nullable|string',
-        ]);
+        $serviceRequest = ServiceRequest::find($id);
 
-        $serviceRequest->update($validated);
+        if (!$serviceRequest) {
+            return response()->json(['message' => 'Service request not found'], 404);
+        }
 
-        return response()->json([
-            'message' => 'Service request updated successfully.',
-            'data' => $serviceRequest
-        ]);
-    }
-
-    /**
-     * Remove the specified service request from storage.
-     */
-    public function destroy(ServiceRequest $serviceRequest): JsonResponse
-    {
         $serviceRequest->delete();
 
-        return response()->json([
-            'message' => 'Service request deleted successfully.'
-        ]);
+        return response()->json(['message' => 'Service request deleted successfully']);
     }
 }

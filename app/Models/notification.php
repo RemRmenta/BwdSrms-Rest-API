@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class notification extends Model
+class Notification extends Model
 {
+    protected $table = 'notifications';
+
     protected $fillable = [
         'user_id',
-        'title',
         'message',
-        'status', // e.g., unread/read
+        'status',
     ];
 }
