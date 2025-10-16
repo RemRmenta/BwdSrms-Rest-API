@@ -14,9 +14,7 @@ return new class extends Migration
             $table->unsignedBigInteger('service_worker_id');
             $table->timestamps();
 
-            // Optional: foreign keys if you have service_requests and users table
-            // $table->foreign('service_request_id')->references('id')->on('service_requests')->onDelete('cascade');
-            // $table->foreign('service_worker_id')->references('id')->on('users')->onDelete('cascade');
+         
         });
     }
 
