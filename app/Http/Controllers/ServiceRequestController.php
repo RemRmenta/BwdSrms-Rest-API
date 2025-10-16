@@ -8,13 +8,13 @@ use Illuminate\Http\JsonResponse;
 
 class ServiceRequestController extends Controller
 {
-    // 🧾 Get all service requests
+    // Get all service requests
     public function index()
     {
         return response()->json(ServiceRequest::all());
     }
 
-    // 🔍 Get one service request by ID
+    // Get one service request by ID
     public function show($id)
     {
         $serviceRequest = ServiceRequest::find($id);
@@ -26,7 +26,7 @@ class ServiceRequestController extends Controller
         return response()->json($serviceRequest);
     }
 
-    // ➕ Create a new service request
+    // Create a new service request
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -44,7 +44,7 @@ class ServiceRequestController extends Controller
         return response()->json($serviceRequest, 201);
     }
 
-    // ✏️ Update an existing service request
+    // Update an existing service request
     public function update(Request $request, $id)
     {
         $serviceRequest = ServiceRequest::find($id);
@@ -58,7 +58,7 @@ class ServiceRequestController extends Controller
         return response()->json($serviceRequest);
     }
 
-    // 🗑️ Delete a service request
+    // Delete a service request
     public function destroy($id)
     {
         $serviceRequest = ServiceRequest::find($id);
